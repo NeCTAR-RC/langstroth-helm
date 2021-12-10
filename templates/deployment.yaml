@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "langstroth.fullname" . }}
+  labels:
+    {{- include "langstroth.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "langstroth.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
+        {{- if .Values.vault.enabled }}
+        vault.hashicorp.com/role: "{{ .Values.vault.role }}"
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-status: "update"
+        vault.hashicorp.com/agent-inject-secret-settings: "{{ .Values.vault.settings_secret }}"
+        vault.hashicorp.com/agent-inject-template-settings: |
+          {{ print "{{- with secret \"" .Values.vault.settings_secret "\" -}}" }}
+          {{ print "{{- range $key, $val := .Data.data }}" }}
+          {{ print "export {{ $key }}=\"{{ $val }}\"" }}
+          {{ print "{{- end }}" }}
+          {{ print "{{- end -}}" }}
+          {{- end }}
+      labels:
+        {{- include "langstroth.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "langstroth.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: DJANGO_MIGRATE
+            value: "yes"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+          - name: {{ include "langstroth.fullname" . }}
+            mountPath: "/etc/langstroth/"
+            readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+              httpHeaders:
+              - name: Host
+                value: 127.0.0.1
+            timeoutSeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+              httpHeaders:
+              - name: Host
+                value: 127.0.0.1
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: {{ include "langstroth.fullname" . }}
+        configMap:
+          name: {{ include "langstroth.fullname" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
