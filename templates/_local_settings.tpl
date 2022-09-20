@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
 {{- end }}
 ]
 
-SECRET_KEY = os.getenv("DJANO_SECRET_KEY", "{{ .Values.conf.secret_key }}")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "{{ .Values.conf.secret_key }}")
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
