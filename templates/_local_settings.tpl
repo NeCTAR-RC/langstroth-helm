@@ -81,11 +81,12 @@ ALLOCATION_API_URL = "{{ .Values.conf.allocation_api_url }}"
 STATIC_URL = '{{ .Values.conf.static_url }}'
 
 {{- if .Values.conf.swift.auth_url }}
+
 STATICFILES_STORAGE = 'swift.storage.StaticSwiftStorage'
 SWIFT_AUTH_URL = '{{ .Values.conf.swift.auth_url }}'
 SWIFT_AUTH_VERSION = '3'
 SWIFT_USERNAME = '{{ .Values.conf.swift.username }}'
-SWIFT_KEY = '{{ .Values.conf.swift.key }}'
+SWIFT_KEY = os.getenv("DJANGO_SWIFT_KEY", "{{ .Values.conf.swift.key }}")
 SWIFT_TENANT_NAME = '{{ .Values.conf.swift.tenant_name }}'
 SWIFT_USER_DOMAIN_NAME = '{{ .Values.conf.swift.user_domain_name }}'
 SWIFT_PROJECT_DOMAIN_NAME = '{{ .Values.conf.swift.project_domain_name }}'

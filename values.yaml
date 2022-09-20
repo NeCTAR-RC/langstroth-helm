@@ -28,6 +28,19 @@ components:
   mariadb: false
 
 
+pdb:
+  enabled: false
+  minAvailable: 1
+
+
+podAffinityPreset: ""
+podAntiAffinityPreset: soft
+nodeAffinityPreset:
+  type: ""
+  key: ""
+  values: []
+affinity: {}
+
 replicaCount: 1
 
 image:
@@ -105,4 +118,3 @@ nodeSelector: {}
 
 tolerations: []
 
-affinity: {}

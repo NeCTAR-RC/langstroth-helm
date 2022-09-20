@@ -1,0 +1,13 @@
+{{- if .Values.pdb.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "langstroth.fullname" . }}
+  labels:
+    {{- include "langstroth.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.pdb.minAvailable | default 0 }}
+  selector:
+    matchLabels:
+      {{- include "langstroth.selectorLabels" . | nindent 6 }}
+{{- end }}
