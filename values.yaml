@@ -19,6 +19,7 @@ conf:
     static_container_name: 'static'
 
 vault:
+  enabled: false
   role: "k8s"
   settings_secret: "path/to/vault/secret"
 
