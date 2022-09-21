@@ -63,8 +63,8 @@ spec:
               httpHeaders:
               - name: Host
                 value: 127.0.0.1
-            timeoutSeconds: 5
-            periodSeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 20
             successThreshold: 1
             failureThreshold: 3
           startupProbe:
@@ -76,8 +76,8 @@ spec:
               - name: Host
                 value: 127.0.0.1
             initialDelaySeconds: 30
-            timeoutSeconds: 5
-            periodSeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 20
             successThreshold: 1
             failureThreshold: 3
           resources:
