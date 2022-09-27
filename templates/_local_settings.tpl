@@ -53,7 +53,7 @@ DATABASES = {
 }
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': [
                      {{- range .Values.conf.memcached_hosts }}
                      '{{ . }}',
