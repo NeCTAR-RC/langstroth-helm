@@ -19,6 +19,7 @@ TEST_MODE = False
 DEBUG = True
 LOG_LEVEL = 'DEBUG'
 {{- else }}
+DEBUG = False
 LOG_LEVEL = 'INFO'
 {{- end }}
 
