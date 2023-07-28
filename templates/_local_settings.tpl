@@ -40,7 +40,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "{{ .Values.conf.secret_key }}")
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DB_PASSWORD = os.getenv("DJANGO_DB_PASSWORD", "{{ .Values.conf.db_password }}")
+DB_PASSWORD = secret_key.read_from_file(
+    os.path.join('/etc/langstroth', '.db_password_store'))
 
 DATABASES = {
     'default': {
@@ -62,6 +63,29 @@ CACHES = {
                      ]
     },
 }
+
+# If USE_OIDC is True, Langstroth will use OIDC authentication for the
+# Admin site.  If False, it will use classic username + password.  See
+# langstroth/urls.py
+USE_OIDC = {{ .Values.conf.oidc.use_oidc }}
+
+# OpenID Connect Auth settings
+OIDC_SERVER_URL = "{{ .Values.conf.oidc.server_url }}"
+OIDC_RP_CLIENT_ID = "{{ .Values.conf.oidc.rp_client_id }}"
+OIDC_RP_SIGN_ALGO = "{{ .Values.conf.oidc.rp_sign_algo }}"
+
+# OIDC_RP_SCOPES should include a scope that serves the ``roles`` claim
+# in the ID token, with an array of user's roles.
+OIDC_RP_SCOPES = "{{ .Values.conf.oidc.rp_scopes }}"
+
+# OpenID Connect settings
+OIDC_OP_AUTHORIZATION_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/auth"
+OIDC_OP_TOKEN_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/token"
+OIDC_OP_USER_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/userinfo"
+OIDC_OP_JWKS_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/certs"
+
+OIDC_RP_CLIENT_SECRET = secret_key.read_from_file(
+    os.path.join('/etc/langstroth', '.oidc_rp_client_secret'))
 
 # The URL to your Nagios installation.
 NAGIOS_URL = "{{ .Values.conf.nagios_url }}"

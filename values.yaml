@@ -17,9 +17,14 @@ conf:
     user_domain_name: 'Default'
     project_domain_name: 'Default'
     static_container_name: 'static'
+  oidc:
+    use_oidc: 'True'
+    server_url: 'https://sso.rc.nectar.org.au/auth/realms/nectar/protocol/openid-connect'
+    rp_client_id: 'langstroth'
+    rp_sign_algo: 'RS256'
+    rp_scopes: 'openid email'
 
 vault:
-  enabled: false
   role: "k8s"
   settings_secret: "path/to/vault/secret"
 
