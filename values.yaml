@@ -8,6 +8,7 @@ conf:
   debug: false
   db_name: langstroth
   db_user: langstroth
+  db_password: 'secret'
   static_url: '/static/'
   swift:
     auth_url:
@@ -18,9 +19,10 @@ conf:
     project_domain_name: 'Default'
     static_container_name: 'static'
   oidc:
-    use_oidc: 'True'
+    use_oidc: true
     server_url: 'https://sso.rc.nectar.org.au/auth/realms/nectar/protocol/openid-connect'
     rp_client_id: 'langstroth'
+    rp_client_secret: 'secret'
     rp_sign_algo: 'RS256'
     rp_scopes: 'openid email'
 

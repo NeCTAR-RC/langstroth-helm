@@ -40,8 +40,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "{{ .Values.conf.secret_key }}")
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DB_PASSWORD = secret_key.read_from_file(
-    os.path.join('/etc/langstroth', '.db_password_store'))
+DB_PASSWORD = os.getenv("DJANGO_DB_PASSWORD", "{{ .Values.conf.db_password }}")
 
 DATABASES = {
     'default': {
@@ -67,7 +66,11 @@ CACHES = {
 # If USE_OIDC is True, Langstroth will use OIDC authentication for the
 # Admin site.  If False, it will use classic username + password.  See
 # langstroth/urls.py
-USE_OIDC = {{ .Values.conf.oidc.use_oidc }}
+{{- if .Values.conf.oidc.use_oidc }}
+USE_OIDC = True
+{{- else }}
+USE_OIDC = False
+{{- end }}
 
 # OpenID Connect Auth settings
 OIDC_SERVER_URL = "{{ .Values.conf.oidc.server_url }}"
@@ -84,8 +87,8 @@ OIDC_OP_TOKEN_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/token"
 OIDC_OP_USER_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/userinfo"
 OIDC_OP_JWKS_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/certs"
 
-OIDC_RP_CLIENT_SECRET = secret_key.read_from_file(
-    os.path.join('/etc/langstroth', '.oidc_rp_client_secret'))
+OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET",
+                                  "{{ .Values.conf.oidc.rp_client_secret}}")
 
 # The URL to your Nagios installation.
 NAGIOS_URL = "{{ .Values.conf.nagios_url }}"
