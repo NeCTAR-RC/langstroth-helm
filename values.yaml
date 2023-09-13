@@ -9,15 +9,8 @@ conf:
   db_name: langstroth
   db_user: langstroth
   db_password: 'secret'
+  secret_key: 'secret'
   static_url: '/static/'
-  swift:
-    auth_url:
-    username: 'langstroth'
-    key: 'secret'
-    tenant_name: 'langstroth'
-    user_domain_name: 'Default'
-    project_domain_name: 'Default'
-    static_container_name: 'static'
   oidc:
     use_oidc: true
     server_url: 'https://sso.rc.nectar.org.au/auth/realms/nectar/protocol/openid-connect'

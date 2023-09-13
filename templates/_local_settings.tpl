@@ -16,11 +16,17 @@ import os
 
 TEST_MODE = False
 {{- if .Values.conf.debug }}
+# Debug settings
 DEBUG = True
 LOG_LEVEL = 'DEBUG'
 {{- else }}
+# Production settings
 DEBUG = False
 LOG_LEVEL = 'INFO'
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+# Temporarily serve static files from Django
+SERVE_STATIC = True
 {{- end }}
 
 ADMINS = (
@@ -63,6 +69,8 @@ CACHES = {
     },
 }
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # If USE_OIDC is True, Langstroth will use OIDC authentication for the
 # Admin site.  If False, it will use classic username + password.  See
 # langstroth/urls.py
@@ -82,10 +90,10 @@ OIDC_RP_SIGN_ALGO = "{{ .Values.conf.oidc.rp_sign_algo }}"
 OIDC_RP_SCOPES = "{{ .Values.conf.oidc.rp_scopes }}"
 
 # OpenID Connect settings
-OIDC_OP_AUTHORIZATION_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/auth"
-OIDC_OP_TOKEN_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/token"
-OIDC_OP_USER_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/userinfo"
-OIDC_OP_JWKS_ENDPOINT = "{{ .Values.conf.oidc.server_url }}/certs"
+OIDC_OP_AUTHORIZATION_ENDPOINT = OIDC_SERVER_URL + "/auth"
+OIDC_OP_TOKEN_ENDPOINT = OIDC_SERVER_URL + "/token"
+OIDC_OP_USER_ENDPOINT = OIDC_SERVER_URL + "/userinfo"
+OIDC_OP_JWKS_ENDPOINT = OIDC_SERVER_URL + "/certs"
 
 OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET",
                                   "{{ .Values.conf.oidc.rp_client_secret}}")
@@ -108,19 +116,19 @@ ALLOCATION_API_URL = "{{ .Values.conf.allocation_api_url }}"
 
 STATIC_URL = '{{ .Values.conf.static_url }}'
 
-{{- if .Values.conf.swift.auth_url }}
+STATIC_ROOT = "/usr/lib/langstroth/static"
 
-STATICFILES_STORAGE = 'swift.storage.StaticSwiftStorage'
-SWIFT_AUTH_URL = '{{ .Values.conf.swift.auth_url }}'
-SWIFT_AUTH_VERSION = '3'
-SWIFT_USERNAME = '{{ .Values.conf.swift.username }}'
-SWIFT_KEY = os.getenv("DJANGO_SWIFT_KEY", "{{ .Values.conf.swift.key }}")
-SWIFT_TENANT_NAME = '{{ .Values.conf.swift.tenant_name }}'
-SWIFT_USER_DOMAIN_NAME = '{{ .Values.conf.swift.user_domain_name }}'
-SWIFT_PROJECT_DOMAIN_NAME = '{{ .Values.conf.swift.project_domain_name }}'
-SWIFT_STATIC_CONTAINER_NAME = '{{ .Values.conf.swift.static_container_name }}'
-{{- end }}
+INSTALLED_APPS += ["compressor"]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
