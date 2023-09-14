@@ -11,5 +11,6 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+  sessionAffinity: ClientIP
   selector:
     {{- include "langstroth.selectorLabels" . | nindent 4 }}
