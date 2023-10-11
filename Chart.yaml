@@ -2,8 +2,8 @@ apiVersion: v2
 name: langstroth
 description: A Helm chart for Kubernetes
 type: application
-version: 1.0.19
-appVersion: 2.0.0-8-g77c7d5b
+version: 1.0.20
+appVersion: 2.0.0-9-g3d674e9
 dependencies:
 - name: memcached
   version: 6.2.4
