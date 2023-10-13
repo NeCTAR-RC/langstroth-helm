@@ -171,4 +171,11 @@ INST_TARGETS = [
 
 COMPOSITION_QUERY = {{ toJson .Values.conf.composition_query }}
 
+COMPOSITION_TABS = [
+{{- range .Values.conf.composition_tabs }}
+  {{ . }},
+{{- end }}
+]
+
+
 {{- end }}

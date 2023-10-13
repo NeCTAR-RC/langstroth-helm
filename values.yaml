@@ -18,6 +18,10 @@ conf:
     rp_client_secret: 'secret'
     rp_sign_algo: 'RS256'
     rp_scopes: 'openid email'
+  inst_targets: []
+  cores_targets: []
+  composition_queries: {}
+  composition_tabs: []
 
 vault:
   role: "k8s"
