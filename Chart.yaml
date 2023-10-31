@@ -2,8 +2,8 @@ apiVersion: v2
 name: langstroth
 description: A Helm chart for a Nectar status site (Langstroth)
 type: application
-version: 1.0.30
-appVersion: 2.0.0-18-g4c461b1
+version: 1.0.31
+appVersion: 2.0.0-18-g1018448
 dependencies:
 - name: memcached
   version: 6.2.4
