@@ -6,6 +6,7 @@
 
 conf:
   debug: false
+  compress: true
   db_name: langstroth
   db_user: langstroth
   db_password: 'secret'

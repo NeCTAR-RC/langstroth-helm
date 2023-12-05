@@ -23,10 +23,13 @@ LOG_LEVEL = 'DEBUG'
 # Production settings
 DEBUG = False
 LOG_LEVEL = 'INFO'
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True
 # Temporarily serve static files from Django
 SERVE_STATIC = True
+{{- end }}
+
+{{- if .Values.conf.compress }}
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
 {{- end }}
 
 ADMINS = (
