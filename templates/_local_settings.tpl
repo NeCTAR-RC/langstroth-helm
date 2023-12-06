@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-TEST_MODE = False
 {{- if .Values.conf.debug }}
 DEBUG = True
 LOG_LEVEL = 'DEBUG'
