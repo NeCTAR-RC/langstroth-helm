@@ -16,15 +16,11 @@ import os
 
 TEST_MODE = False
 {{- if .Values.conf.debug }}
-# Debug settings
 DEBUG = True
 LOG_LEVEL = 'DEBUG'
 {{- else }}
-# Production settings
 DEBUG = False
 LOG_LEVEL = 'INFO'
-# Temporarily serve static files from Django
-SERVE_STATIC = True
 {{- end }}
 
 {{- if .Values.conf.compress }}
@@ -79,9 +75,6 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # langstroth/urls.py
 {{- if .Values.conf.oidc.use_oidc }}
 USE_OIDC = True
-{{- else }}
-USE_OIDC = False
-{{- end }}
 
 # OpenID Connect Auth settings
 OIDC_SERVER_URL = "{{ .Values.conf.oidc.server_url }}"
@@ -100,6 +93,10 @@ OIDC_OP_JWKS_ENDPOINT = OIDC_SERVER_URL + "/certs"
 
 OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET",
                                   "{{ .Values.conf.oidc.rp_client_secret}}")
+
+{{- else }}
+USE_OIDC = False
+{{- end }}
 
 # The URL to your Nagios installation.
 NAGIOS_URL = "{{ .Values.conf.nagios_url }}"
