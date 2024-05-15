@@ -2,7 +2,7 @@ apiVersion: v2
 name: langstroth
 description: A Helm chart for a Nectar status site (Langstroth)
 type: application
-version: 1.4.0
+version: 1.5.0
 appVersion: 2.0.0-84-g4e4a255
 dependencies:
 - name: memcached
@@ -10,7 +10,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   condition: components.memcached
 - name: mariadb
-  version: 18.0.3
+  version: 18.0.4
   repository: https://charts.bitnami.com/bitnami
   condition: components.mariadb
 - name: common
