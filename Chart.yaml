@@ -4,6 +4,8 @@ description: A Helm chart for a Nectar status site (Langstroth)
 type: application
 version: 1.6.0
 appVersion: 2.0.0-84-g4e4a255
+sources:
+  - https://github.com/NeCTAR-RC/langstroth-helm.git
 dependencies:
 - name: memcached
   version: 7.x.x
