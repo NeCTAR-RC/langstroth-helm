@@ -2,8 +2,8 @@ apiVersion: v2
 name: langstroth
 description: A Helm chart for a Nectar status site (Langstroth)
 type: application
-version: 1.11.1
-appVersion: 2.0.0-90-g3f8b5e5
+version: 1.11.2
+appVersion: 2.0.0-89-g9082d70
 sources:
 - https://github.com/NeCTAR-RC/langstroth-helm.git
 dependencies:
