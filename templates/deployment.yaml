@@ -57,7 +57,7 @@ spec:
             readOnly: true
           livenessProbe:
             httpGet:
-              path: /heathcheck/liveness-probe
+              path: /healthcheck/liveness-probe/
               port: http
               scheme: HTTP
               httpHeaders:
@@ -69,7 +69,7 @@ spec:
             failureThreshold: 3
           startupProbe:
             httpGet:
-              path: /healthcheck/startup-probe
+              path: /healthcheck/startup-probe/
               port: http
               scheme: HTTP
               httpHeaders:
