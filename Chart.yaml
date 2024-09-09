@@ -2,13 +2,13 @@ apiVersion: v2
 name: langstroth
 description: A Helm chart for a Nectar status site (Langstroth)
 type: application
-version: 1.16.0
+version: 1.17.0
 appVersion: 2.0.0-95-g5cad5af
 sources:
 - https://github.com/NeCTAR-RC/langstroth-helm.git
 dependencies:
 - name: memcached
-  version: 7.4.11
+  version: 7.4.15
   repository: oci://registry-1.docker.io/bitnamicharts
   condition: components.memcached
 - name: mariadb
