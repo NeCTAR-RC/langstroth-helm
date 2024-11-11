@@ -12,7 +12,7 @@ dependencies:
   repository: oci://registry-1.docker.io/bitnamicharts
   condition: components.memcached
 - name: mariadb
-  version: 19.1.2
+  version: 20.0.0
   repository: oci://registry-1.docker.io/bitnamicharts
   condition: components.mariadb
 - name: common
