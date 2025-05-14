@@ -17,4 +17,4 @@ dependencies:
   condition: components.mariadb
 - name: common
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 2.30.2
+  version: 2.31.1
