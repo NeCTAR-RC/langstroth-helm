@@ -11,7 +11,5 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-  sessionAffinity: ClientIP
-  externalTrafficPolicy: Local
   selector:
     {{- include "langstroth.selectorLabels" . | nindent 4 }}
