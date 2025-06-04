@@ -30,4 +30,10 @@ spec:
         - path:
             type: PathPrefix
             value: /
+      sessionPersistence:
+        sessionName: eg-session
+        type: Cookie
+        absoluteTimeout: 10s
+        cookieConfig:
+          lifetimeType: Permanent
 {{- end }}
