@@ -92,6 +92,9 @@ gateway:
     - chart-example.local
   parentRefs:
     - name: default
+  timeouts:
+    request: 60s
+    backendRequest: 60s
 
 ingress:
   enabled: false

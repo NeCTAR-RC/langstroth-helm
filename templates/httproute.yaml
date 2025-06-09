@@ -36,4 +36,8 @@ spec:
         absoluteTimeout: 10s
         cookieConfig:
           lifetimeType: Permanent
+      {{- with .Values.gateway.timeouts }}
+      timeouts:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}
