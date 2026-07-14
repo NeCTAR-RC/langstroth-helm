@@ -23,6 +23,15 @@ conf:
   cores_targets: []
   composition_queries: {}
   composition_tabs: []
+  sentry:
+    # GlitchTip/Sentry compatible DSN. Error reporting (and CSP
+    # violation reporting) is disabled when no DSN is set. The DSN
+    # can also be delivered as a SENTRY_DSN environment variable via
+    # the vault settings secret.
+    dsn: ''
+    # Environment name reported with each event, e.g. production
+    # or testing.
+    environment: ''
 
 vault:
   role: "k8s"

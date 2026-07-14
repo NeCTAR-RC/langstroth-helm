@@ -117,6 +117,13 @@ STATIC_URL = '{{ .Values.conf.static_url }}'
 
 STATIC_ROOT = "/usr/lib/langstroth/static"
 
+# Report unhandled exceptions and ERROR level log messages to a
+# GlitchTip (or Sentry) instance. Reporting is disabled when no DSN
+# is set. CSP violation reports are also sent to the same project
+# via its security endpoint (the CSP report-uri directive).
+SENTRY_DSN = os.getenv("SENTRY_DSN", "{{ .Values.conf.sentry.dsn }}") or None
+SENTRY_ENVIRONMENT = "{{ .Values.conf.sentry.environment }}" or None
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

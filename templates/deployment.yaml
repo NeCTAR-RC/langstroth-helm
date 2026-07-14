@@ -47,6 +47,11 @@ spec:
           env:
           - name: DJANGO_MIGRATE
             value: "yes"
+          # The container image has no package metadata for pbr to
+          # derive a release from, so sentry-sdk falls back to this.
+          # Inert unless a Sentry DSN is configured.
+          - name: SENTRY_RELEASE
+            value: "langstroth@{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
             - name: http
               containerPort: 80
