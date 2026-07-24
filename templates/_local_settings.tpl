@@ -110,6 +110,15 @@ NAGIOS_SERVICE_GROUP = '{{ .Values.conf.nagios_servicegroup }}'
 # The URL to the graphite web interface
 GRAPHITE_URL = "{{ .Values.conf.graphite_url }}"
 
+# Which time-series backend serves the growth/composition/user
+# statistics pages: 'graphite' (legacy) or 'victoriametrics'.
+# Switching is a settings change so cutover and rollback need no
+# code deployment.
+METRICS_BACKEND = "{{ .Values.conf.metrics_backend }}"
+
+# The URL to the VictoriaMetrics server (Prometheus-compatible API).
+VICTORIAMETRICS_URL = "{{ .Values.conf.victoriametrics_url }}"
+
 # URL of allocation api
 ALLOCATION_API_URL = "{{ .Values.conf.allocation_api_url }}"
 
@@ -170,6 +179,16 @@ COMPOSITION_TABS = [
   {{ . }},
 {{- end }}
 ]
+
+# VictoriaMetrics series definitions (label-based replacements for
+# the graphite target lists above): chart alias -> the availability
+# zones summed into it.
+INST_SERIES = {{ toJson .Values.conf.inst_series }}
+
+CORES_SERIES = {{ toJson .Values.conf.cores_series }}
+
+# Composition tab key -> availability zones (None means all).
+COMPOSITION_AZ_GROUPS = {{ toJson .Values.conf.composition_az_groups | replace "null" "None" }}
 
 
 {{- end }}

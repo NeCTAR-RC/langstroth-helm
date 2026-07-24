@@ -21,8 +21,18 @@ conf:
     rp_scopes: 'openid email'
   inst_targets: []
   cores_targets: []
-  composition_queries: {}
+  composition_query: {}
   composition_tabs: []
+  # Which time-series backend serves the metrics pages: 'graphite'
+  # (legacy) or 'victoriametrics'.
+  metrics_backend: 'graphite'
+  victoriametrics_url: ''
+  # VictoriaMetrics series definitions: [[alias, [az, ...]], ...]
+  inst_series: []
+  cores_series: []
+  # Composition tab key -> availability zones (~ means all).
+  composition_az_groups:
+    all: ~
   sentry:
     # GlitchTip/Sentry compatible DSN. Error reporting (and CSP
     # violation reporting) is disabled when no DSN is set. The DSN
