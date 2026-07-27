@@ -30,9 +30,11 @@ conf:
   # VictoriaMetrics series definitions: [[alias, [az, ...]], ...]
   inst_series: []
   cores_series: []
-  # Composition tab key -> availability zones (~ means all).
+  # Composition tab key -> availability zones ([] means all). Needs
+  # langstroth >= 3.2.1; spell 'all AZs' as an empty list, not null,
+  # because Helm 3 drops map keys whose override value is null.
   composition_az_groups:
-    all: ~
+    all: []
   sentry:
     # GlitchTip/Sentry compatible DSN. Error reporting (and CSP
     # violation reporting) is disabled when no DSN is set. The DSN
