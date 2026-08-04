@@ -107,13 +107,10 @@ NAGIOS_AUTH = ("{{ .Values.conf.nagios_username }}", "{{ .Values.conf.nagios_pas
 # their availability.
 NAGIOS_SERVICE_GROUP = '{{ .Values.conf.nagios_servicegroup }}'
 
-# The URL to the graphite web interface
-GRAPHITE_URL = "{{ .Values.conf.graphite_url }}"
-
 # Which time-series backend serves the growth/composition/user
-# statistics pages: 'graphite' (legacy) or 'victoriametrics'.
-# Switching is a settings change so cutover and rollback need no
-# code deployment.
+# statistics pages: a short name registered in
+# langstroth.metrics.BACKENDS or a dotted module path implementing
+# the backend interface.
 METRICS_BACKEND = "{{ .Values.conf.metrics_backend }}"
 
 # The URL to the VictoriaMetrics server (Prometheus-compatible API).
@@ -160,29 +157,14 @@ LOGGING = {
     }
 }
 
-CORES_TARGETS = [
-{{- range .Values.conf.cores_targets }}
-  {{ . }},
-{{- end }}
-]
-
-INST_TARGETS = [
-{{- range .Values.conf.inst_targets }}
-  {{ . }},
-{{- end }}
-]
-
-COMPOSITION_QUERY = {{ toJson .Values.conf.composition_query }}
-
 COMPOSITION_TABS = [
 {{- range .Values.conf.composition_tabs }}
   {{ . }},
 {{- end }}
 ]
 
-# VictoriaMetrics series definitions (label-based replacements for
-# the graphite target lists above): chart alias -> the availability
-# zones summed into it.
+# Growth chart series: chart alias -> the availability zones summed
+# into it.
 INST_SERIES = {{ toJson .Values.conf.inst_series }}
 
 CORES_SERIES = {{ toJson .Values.conf.cores_series }}

@@ -19,15 +19,14 @@ conf:
     rp_client_secret: 'secret'
     rp_sign_algo: 'RS256'
     rp_scopes: 'openid email'
-  inst_targets: []
-  cores_targets: []
-  composition_query: {}
   composition_tabs: []
-  # Which time-series backend serves the metrics pages: 'graphite'
-  # (legacy) or 'victoriametrics'.
-  metrics_backend: 'graphite'
+  # Which time-series backend serves the metrics pages: a short name
+  # registered in langstroth.metrics.BACKENDS (currently only
+  # 'victoriametrics') or a dotted module path implementing the
+  # backend interface.
+  metrics_backend: 'victoriametrics'
   victoriametrics_url: ''
-  # VictoriaMetrics series definitions: [[alias, [az, ...]], ...]
+  # Growth chart series: [[alias, [az, ...]], ...]
   inst_series: []
   cores_series: []
   # Composition tab key -> availability zones ([] means all). Needs
