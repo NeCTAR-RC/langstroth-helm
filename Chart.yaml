@@ -8,11 +8,11 @@ sources:
 - https://github.com/NeCTAR-RC/langstroth-helm.git
 dependencies:
 - name: memcached
-  version: 8.8.0
+  version: 8.8.1
   repository: oci://registry-1.docker.io/bitnamicharts
   condition: components.memcached
 - name: mariadb
-  version: 28.0.0
+  version: 28.0.2
   repository: oci://registry-1.docker.io/bitnamicharts
   condition: components.mariadb
 - name: common
